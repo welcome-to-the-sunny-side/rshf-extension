@@ -1,0 +1,16 @@
+.vscode
+node_modules
+.DS_Store
+.vscode
+node_modules
+self.txt
+vomitignore.txt
+vomit.txt
+vomitinclude.txt
+*.py[cod]
+.ipynb*
+__pycache__/
+*venv*
+changes.md
+a.json
+.cph
