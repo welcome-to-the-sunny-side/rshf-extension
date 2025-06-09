@@ -264,7 +264,6 @@ function filterBlogsByRank(blogSettings) {
   }
 
   if (!originalRecentActionsULElement) {
-    // console.warn('RSHF: Original "Recent actions" list (ul) not found for filtering.');
     return;
   }
 
@@ -366,7 +365,6 @@ function setupFilteredBlogsBox() {
   }
 
   if (!originalRecentActionsBox) {
-    // console.warn('RSHF: Original "Recent actions" box not found. Filtered box not created.');
     return;
   }
 
@@ -389,7 +387,6 @@ function setupFilteredBlogsBox() {
     } else {
         // Fallback, might not be perfectly styled if arrow is separate
         captionElement.textContent = '→ Recent Actions (Filtered)'; 
-        console.warn("RSHF: Could not precisely change title for filtered box. Used fallback.");
     }
   }
 
@@ -399,7 +396,6 @@ function setupFilteredBlogsBox() {
     ulElement.innerHTML = ''; // Clear any copied list items
     filteredBlogsListElement = ulElement;
   } else {
-    console.warn('RSHF: Could not find <ul> in cloned filtered box. Creating one.');
     const recentActionsDiv = filteredBox.querySelector('.recent-actions');
     if(recentActionsDiv) {
         const newUl = document.createElement('ul');
@@ -453,11 +449,9 @@ async function initializeExtension() {
     if (currentSelectedGroupId && rshfAllGroupsData[currentSelectedGroupId]) {
       rshfSelectedGroupData = rshfAllGroupsData[currentSelectedGroupId];
     } else {
-      console.warn(`RSHF: Selected group data for '${currentSelectedGroupId}' not found in local ratings file.`);
       rshfSelectedGroupData = {}; // Avoid errors, treat as empty group
     }
   } else {
-    console.warn('RSHF: Ratings data not found in local storage. Please refresh data via popup.');
     rshfAllGroupsData = {};
     rshfSelectedGroupData = {};
   }
@@ -784,7 +778,6 @@ async function processProfileBox(settings, group_display_name) {
 // Replace ratings in the DOM elements
 function replaceRatings(elements, settings) {
   if (!rshfSelectedGroupData) {
-    console.warn("RSHF: No selected group data available for replacing ratings.");
     return;
   }
 
@@ -909,6 +902,28 @@ async function profilePageAdditions() {
   }
 
   // Create and insert the chart container below the heatmap
+  function insertTimeChartContainer() {
+    const box = document.createElement('div');
+    box.className = 'roundbox userActivityRoundBox borderTopRound borderBottomRound';
+    box.id = 'rshf-profile-time-histogram';
+    box.style.marginTop = '20px';
+    box.innerHTML = `
+      <div class="_UserActivityFrame_header" style="display: flex; align-items: center;">
+        <div style="font-size:1.4em;">Solves per Month</div>
+        
+      </div>
+      <div style="width:100%;height:220px;">
+        <canvas id="rshf-time-line-chart" style="max-width:100%;max-height:220px;"></canvas>
+      </div>`;
+    const heatmap = document.getElementById('userActivityGraph');
+    if (heatmap && heatmap.parentNode) {
+      heatmap.parentNode.parentNode.insertBefore(box, heatmap.parentNode.nextSibling);
+    } else {
+      document.body.appendChild(box);
+    }
+    return box;
+  }
+
   function insertChartContainer(fromDateValue = '', beforeDateValue = '') {
     const box = document.createElement('div');
     box.className = 'roundbox userActivityRoundBox borderTopRound borderBottomRound';
@@ -916,7 +931,7 @@ async function profilePageAdditions() {
     box.style.marginTop = '20px';
     box.innerHTML = `
       <div class="_UserActivityFrame_header" style="display: flex; align-items: center; justify-content: space-between;">
-        <div></div>
+        <div style="font-size:1.4em;">Rating Histogram</div>
         <div style="display: flex; gap: 12px; align-items: center;">
           <label style="font-size:0.98em;">From: <input type="date" id="rshf-hist-from-date" value="${fromDateValue}" style="font-size:1em;"></label>
           <label style="font-size:0.98em;">Before: <input type="date" id="rshf-hist-before-date" value="${beforeDateValue}" style="font-size:1em;"></label>
@@ -938,8 +953,10 @@ async function profilePageAdditions() {
   const username = getProfileUsername();
   if (!username) return;
   // Remove any previous chart
-  const old = document.getElementById('rshf-profile-rating-histogram');
-  if (old) old.remove();
+  const oldHist = document.getElementById('rshf-profile-rating-histogram');
+  if (oldHist) oldHist.remove();
+  const oldTime = document.getElementById('rshf-profile-time-histogram');
+  if (oldTime) oldTime.remove();
 
   // Date filter state
   let fromDate = '';
@@ -949,32 +966,50 @@ async function profilePageAdditions() {
     beforeDate = window.rshf_hist_date_state.beforeDate;
   }
 
-  // Insert chart container with filter selectors
+  // Insert solves vs time chart container below heatmap, above rating histogram
   insertChartContainer(fromDate, beforeDate);
+  insertTimeChartContainer();
 
-  // Fetch solves and aggregate by rating, deduplicating problems efficiently
-  const submissions = await fetchSolves(username);
-  const seenProblems = new Set(); // 'contestId-index' as key
-  const ratingCounts = new Map();
-  const dedupedSubmissions = [];
-  for (const sub of submissions) {
-    if (sub.verdict === 'OK' && sub.problem && typeof sub.problem.rating === 'number') {
-      // Filter by date range if set
-      if (fromDate) {
-        const subDate = new Date(sub.creationTimeSeconds * 1000);
-        if (subDate < new Date(fromDate)) continue;
-      }
-      if (beforeDate) {
-        const subDate = new Date(sub.creationTimeSeconds * 1000);
-        if (subDate >= new Date(beforeDate)) continue;
-      }
-      const key = sub.problem.contestId + '-' + sub.problem.index;
-      if (!seenProblems.has(key)) {
+  // Fetch all submissions and process them
+  let submissions;
+  if (window.rshfProfileSubmissions && window.rshfProfileSubmissions.handle === username) {
+    submissions = window.rshfProfileSubmissions.data;
+  } else {
+    submissions = await fetchSolves(username);
+    
+    // Process submissions: filter, dedupe, and sort
+    const seenProblems = new Set();
+    submissions = submissions
+      // Filter for AC submissions with problem rating
+      .filter(sub => sub.verdict === 'OK' && sub.problem && typeof sub.problem.rating === 'number')
+      // Sort by submission time (oldest first)
+      .sort((a, b) => a.creationTimeSeconds - b.creationTimeSeconds)
+      // Dedupe by problem, keeping first occurrence (earliest AC)
+      .filter(sub => {
+        const key = `${sub.problem.contestId}-${sub.problem.index}`;
+        if (seenProblems.has(key)) return false;
         seenProblems.add(key);
-        dedupedSubmissions.push(sub);
-      }
-    }
+        return true;
+      });
+      
+    window.rshfProfileSubmissions = { handle: username, data: submissions };
   }
+  
+  // Filter by date range if set
+  const dedupedSubmissions = submissions.filter(sub => {
+    if (fromDate) {
+      const subDate = new Date(sub.creationTimeSeconds * 1000);
+      if (subDate < new Date(fromDate)) return false;
+    }
+    if (beforeDate) {
+      const subDate = new Date(sub.creationTimeSeconds * 1000);
+      if (subDate >= new Date(beforeDate)) return false;
+    }
+    return true;
+  });
+  
+  // Initialize rating counts map
+  const ratingCounts = new Map();
   dedupedSubmissions.forEach(sub => {
     const r = sub.problem.rating;
     if (r >= 800 && r <= 3500) {
@@ -985,7 +1020,7 @@ async function profilePageAdditions() {
 
   // Prepare chart data
 
-  // Add event listeners for date filters
+  // Add event listeners for date filters (both boxes use the same ids, so only one set needed)
   setTimeout(() => {
     const fromInput = document.getElementById('rshf-hist-from-date');
     const beforeInput = document.getElementById('rshf-hist-before-date');
@@ -1007,12 +1042,185 @@ async function profilePageAdditions() {
     }
   }, 50);
 
+  // --- Render solves per year line chart ---
+  // Group deduped submissions by month
+  const solvesByMonth = new Map(); // yyyy-mm -> count
+  dedupedSubmissions.forEach(sub => {
+    const d = new Date(sub.creationTimeSeconds * 1000);
+    const yearMonth = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    solvesByMonth.set(yearMonth, (solvesByMonth.get(yearMonth) || 0) + 1);
+  });
+  const sortedMonths = Array.from(solvesByMonth.keys()).sort((a, b) => {
+    const [ay, am] = a.split('-').map(Number);
+    const [by, bm] = b.split('-').map(Number);
+    return ay - by || am - bm;
+  });
+  const monthCounts = sortedMonths.map(m => solvesByMonth.get(m));
+  // Create container for month problems list
+  const monthListDiv = document.createElement('div');
+  monthListDiv.id = 'rshf-profile-month-problems';
+  monthListDiv.style.margin = '16px 0 0 0';
+  monthListDiv.style.fontSize = '1em';
+  document.getElementById('rshf-profile-time-histogram').appendChild(monthListDiv);
+
+  const ctxTime = document.getElementById('rshf-time-line-chart')?.getContext('2d');
+  if (ctxTime) {
+    // Create a plugin for the background color bands
+    const backgroundPlugin = {
+      id: 'backgroundBands',
+      beforeDraw(chart) {
+        const ctx = chart.ctx;
+        const yAxis = chart.scales.y;
+        const xAxis = chart.scales.x;
+        
+        // Define the band ranges and colors
+        const bands = [
+          { min: 0, max: 20, color: '#91DA9E' },
+          { min: 20, max: 40, color: '#40C463' },
+          { min: 40, max: Infinity, color: '#216E39' }
+        ];
+        
+        // Draw each band
+        bands.forEach(band => {
+          const yTop = yAxis.getPixelForValue(band.max);
+          const yBottom = yAxis.getPixelForValue(band.min);
+          
+          if (yTop !== yBottom) {  // Only draw if the band has height
+            ctx.save();
+            ctx.fillStyle = band.color;
+            ctx.fillRect(
+              xAxis.left,
+              yTop,
+              xAxis.width,
+              yBottom - yTop
+            );
+            ctx.restore();
+          }
+        });
+      }
+    };
+
+    new Chart(ctxTime, {
+      type: 'line',
+      plugins: [backgroundPlugin],
+      data: {
+        labels: sortedMonths,
+        datasets: [{
+          label: 'Solves per Month',
+          data: monthCounts,
+          fill: false,
+          borderColor: 'rgba(243, 219, 62, 0.87)',  // bright golden
+          pointRadius: 3,
+          pointHoverRadius: 4,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: 'rgba(243, 219, 62, 0.87)',
+          pointBorderWidth: 2,
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(243, 219, 62, 0.87)',
+          tension: 0.1,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        onHover: (e, elements) => {
+          const canvas = e.native.target;
+          canvas.style.cursor = elements.length ? 'pointer' : 'default';
+        },
+        onClick: (evt, elements) => {
+          if (!elements.length) return;
+          const idx = elements[0].index;
+          const selectedMonth = sortedMonths[idx];
+          
+          // Filter submissions for the selected month
+          const [year, month] = selectedMonth.split('-').map(Number);
+          const monthStart = new Date(year, month - 1, 1).getTime() / 1000;
+          const monthEnd = new Date(year, month, 1).getTime() / 1000;
+          
+          const monthProblems = [];
+          const seenProblems = new Set();
+          
+          dedupedSubmissions.forEach(sub => {
+            if (sub.verdict === 'OK' && sub.problem && 
+                sub.creationTimeSeconds >= monthStart && 
+                sub.creationTimeSeconds < monthEnd) {
+              const problemKey = `${sub.problem.contestId}${sub.problem.index}`;
+              if (!seenProblems.has(problemKey)) {
+                seenProblems.add(problemKey);
+                monthProblems.push({
+                  code: `${sub.problem.contestId}${sub.problem.index}`,
+                  url: `https://codeforces.com/problemset/problem/${sub.problem.contestId}/${sub.problem.index}`,
+                  rating: sub.problem.rating || '?'
+                });
+              }
+            }
+          });
+          
+          // Display the problems
+          if (monthProblems.length === 0) {
+            monthListDiv.innerHTML = `<em>No problems found for ${selectedMonth}.</em>`;
+          } else {
+            monthListDiv.innerHTML = `
+              <b>Problems solved in ${selectedMonth} (${monthProblems.length}):</b><br>
+              ${monthProblems.map(p => 
+                `<a href="${p.url}" target="_blank" 
+                   style="margin-right:8px; color:${ratingColor(p.rating)};"
+                   title="Rating: ${p.rating}">
+                  ${p.code}
+                </a>`
+              ).join('')}
+            `;
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => `Solved: ${ctx.parsed.y} (${ctx.label})`
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: { display: false, text: 'Year', font: { size: 15 } },
+            ticks: {
+              font: { size: 14 },
+              // Only show label if it's the first month of a year
+              callback: function(value, index, values) {
+                const label = this.getLabelForValue(value);
+                const month = label.split('-')[1];
+                return month === '01' ? label.split('-')[0] : '';
+              },
+              maxRotation: 0,
+              autoSkip: false,
+            },
+            grid: { display: false }
+          },
+          y: {
+            title: { display: false, text: 'Problems Solved', font: { size: 15 } },
+            beginAtZero: true,
+            precision: 0,
+            grid: { color: 'rgba(0,0,0,0.07)' },
+            ticks: { font: { size: 13 } }
+          }
+        },
+        elements: {
+          line: {
+            borderJoinStyle: 'round',
+            capBezierPoints: true
+          }
+        }
+      }
+    });
+  }
+
+
   const labels = Array.from(ratingCounts.keys()).sort((a,b)=>a-b);
   const data = labels.map(r => ratingCounts.get(r));
 
   // Hardcoded color logic for histogram bars
   function getBarColor(rating) {
-    if (rating >= 2300 && rating < 2400) return 'rgba(235, 153, 52, 0.76)'; // darker orange
+    if (rating >= 2300 && rating < 2400) return 'rgba(248, 203, 147, 0.84)'; // darker orange
     if (rating >= 3000 && rating <= 3500) return 'rgba(228, 18, 18, 0.75)'; // darker red
     // fallback to ratingColor util
     return hexToRgba(ratingColor(rating), 0.5);
@@ -1075,6 +1283,10 @@ const chart = new Chart(ctx, {
     }]
   },
   options: {
+    onHover: (e, elements) => {
+      const canvas = e.native.target;
+      canvas.style.cursor = elements.length ? 'pointer' : 'default';
+    },
     responsive: true,
     plugins: {
       legend: { display: false },
@@ -1093,7 +1305,7 @@ const chart = new Chart(ctx, {
         listDiv.innerHTML = `<em>No problems found for rating ${rating}.</em>`;
         return;
       }
-      listDiv.innerHTML = `<b>${rating} rated problems solved:</b> ` +
+      listDiv.innerHTML = `<b>${rating} rated problems solved (${problems.length}):</b><br>` +
         problems.map(p => `<a href="${p.url}" target="_blank" style="margin-right:6px;">${p.code}</a>`).join(', ');
       // Scroll to listDiv
     //   listDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1102,7 +1314,7 @@ const chart = new Chart(ctx, {
   scales: {
     x: {
       title: { display: true, text: 'Problem Rating' },
-      ticks: { autoSkip: false, font: { size: 12 } }
+      ticks: { autoSkip: true, font: { size: 12 } }
     },
     y: {
       title: { display: true, text: 'Problems Solved' },
