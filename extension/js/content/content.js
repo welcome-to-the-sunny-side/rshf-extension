@@ -241,8 +241,6 @@ function filterBlogsByRank(blogSettings) {
     }
   }
 
-  console.log(blogSettings);
-
   // Find all recent blog action 
   if (!filteredBlogsListElement) {
     const existingFilteredBox = document.getElementById(FILTERED_BOX_ID);
@@ -285,7 +283,6 @@ function filterBlogsByRank(blogSettings) {
     if (match) {
       username = match[1];
     }
-    console.log(username);
     // Map user class to rating leftbound
     const classList = userLink.classList;
     if (classList) {
@@ -542,12 +539,16 @@ async function processPage(settings, group_display_name) { // Added group_displa
   
   if (window.location.pathname.startsWith('/profile/')) {
     processProfileBox(settings, group_display_name);
+    profilePageAdditions();
   }
 
   // Call sidebar contest box processing second last
   processSidebarContestBox();
   // Call contest page processing last
-  processContestPage();
+
+  if(window.location.pathname.startsWith('/contests')) {
+    processContestPage();
+  }
 }
 
 
@@ -874,7 +875,244 @@ function handleNonGroupMember(element, displayMode) {
   }
 }
 
+// --- Profile Page Additions: Problem-Rating Histogram -----------------------
+async function profilePageAdditions() {
 
+  // Extract username from profile URL
+  function getProfileUsername() {
+    const m = window.location.pathname.match(/\/profile\/([^/?#]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  // Get color for a rating (from your rating utils)
+  function ratingColor(r) {
+    if (r < 1200) return RANK_COLORS.newbie;
+    if (r < 1400) return RANK_COLORS.pupil;
+    if (r < 1600) return RANK_COLORS.specialist;
+    if (r < 1900) return RANK_COLORS.expert;
+    if (r < 2100) return RANK_COLORS.candmaster;
+    if (r < 2300) return RANK_COLORS.master;
+    if (r < 2400) return RANK_COLORS.intmaster;
+    if (r < 2600) return RANK_COLORS.grandmaster;
+    if (r < 3000) return RANK_COLORS.intgrandmaster;
+    return RANK_COLORS.legend;
+  }
+
+  // Fetch all solves for a user
+  async function fetchSolves(handle) {
+    try {
+      const resp = await fetch(`https://codeforces.com/api/user.status?handle=${encodeURIComponent(handle)}`);
+      const data = await resp.json();
+      if (data.status !== 'OK' || !Array.isArray(data.result)) return [];
+      return data.result;
+    } catch { return []; }
+  }
+
+  // Create and insert the chart container below the heatmap
+  function insertChartContainer(fromDateValue = '', beforeDateValue = '') {
+    const box = document.createElement('div');
+    box.className = 'roundbox userActivityRoundBox borderTopRound borderBottomRound';
+    box.id = 'rshf-profile-rating-histogram';
+    box.style.marginTop = '20px';
+    box.innerHTML = `
+      <div class="_UserActivityFrame_header" style="display: flex; align-items: center; justify-content: space-between;">
+        <div></div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <label style="font-size:0.98em;">From: <input type="date" id="rshf-hist-from-date" value="${fromDateValue}" style="font-size:1em;"></label>
+          <label style="font-size:0.98em;">Before: <input type="date" id="rshf-hist-before-date" value="${beforeDateValue}" style="font-size:1em;"></label>
+        </div>
+      </div>
+      <div style="width:100%;height:320px;">
+        <canvas id="rshf-rating-bar-chart" style="max-width:100%;max-height:320px;"></canvas>
+      </div>`;
+    const heatmap = document.getElementById('userActivityGraph');
+    if (heatmap && heatmap.parentNode) {
+      heatmap.parentNode.parentNode.insertBefore(box, heatmap.parentNode.nextSibling);
+    } else {
+      document.body.appendChild(box);
+    }
+    return box;
+  }
+
+  // Main logic
+  const username = getProfileUsername();
+  if (!username) return;
+  // Remove any previous chart
+  const old = document.getElementById('rshf-profile-rating-histogram');
+  if (old) old.remove();
+
+  // Date filter state
+  let fromDate = '';
+  let beforeDate = '';
+  if (window.rshf_hist_date_state) {
+    fromDate = window.rshf_hist_date_state.fromDate;
+    beforeDate = window.rshf_hist_date_state.beforeDate;
+  }
+
+  // Insert chart container with filter selectors
+  insertChartContainer(fromDate, beforeDate);
+
+  // Fetch solves and aggregate by rating, deduplicating problems efficiently
+  const submissions = await fetchSolves(username);
+  const seenProblems = new Set(); // 'contestId-index' as key
+  const ratingCounts = new Map();
+  const dedupedSubmissions = [];
+  for (const sub of submissions) {
+    if (sub.verdict === 'OK' && sub.problem && typeof sub.problem.rating === 'number') {
+      // Filter by date range if set
+      if (fromDate) {
+        const subDate = new Date(sub.creationTimeSeconds * 1000);
+        if (subDate < new Date(fromDate)) continue;
+      }
+      if (beforeDate) {
+        const subDate = new Date(sub.creationTimeSeconds * 1000);
+        if (subDate >= new Date(beforeDate)) continue;
+      }
+      const key = sub.problem.contestId + '-' + sub.problem.index;
+      if (!seenProblems.has(key)) {
+        seenProblems.add(key);
+        dedupedSubmissions.push(sub);
+      }
+    }
+  }
+  dedupedSubmissions.forEach(sub => {
+    const r = sub.problem.rating;
+    if (r >= 800 && r <= 3500) {
+      ratingCounts.set(r, (ratingCounts.get(r) || 0) + 1);
+    }
+  });
+  if (ratingCounts.size === 0) return;
+
+  // Prepare chart data
+
+  // Add event listeners for date filters
+  setTimeout(() => {
+    const fromInput = document.getElementById('rshf-hist-from-date');
+    const beforeInput = document.getElementById('rshf-hist-before-date');
+    if (fromInput && beforeInput) {
+      fromInput.addEventListener('change', e => {
+        window.rshf_hist_date_state = {
+          fromDate: fromInput.value,
+          beforeDate: beforeInput.value
+        };
+        profilePageAdditions();
+      });
+      beforeInput.addEventListener('change', e => {
+        window.rshf_hist_date_state = {
+          fromDate: fromInput.value,
+          beforeDate: beforeInput.value
+        };
+        profilePageAdditions();
+      });
+    }
+  }, 50);
+
+  const labels = Array.from(ratingCounts.keys()).sort((a,b)=>a-b);
+  const data = labels.map(r => ratingCounts.get(r));
+
+  // Hardcoded color logic for histogram bars
+  function getBarColor(rating) {
+    if (rating >= 2300 && rating < 2400) return 'rgba(235, 153, 52, 0.76)'; // darker orange
+    if (rating >= 3000 && rating <= 3500) return 'rgba(228, 18, 18, 0.75)'; // darker red
+    // fallback to ratingColor util
+    return hexToRgba(ratingColor(rating), 0.5);
+  }
+  let bgColors = labels.map(getBarColor);
+
+  // Map to store problems for each rating
+const ratingToProblems = new Map();
+submissions.forEach(sub => {
+  if (sub.verdict === 'OK' && sub.problem && typeof sub.problem.rating === 'number') {
+    const r = sub.problem.rating;
+    if (r >= 800 && r <= 3500) {
+      ratingCounts.set(r, (ratingCounts.get(r) || 0) + 1);
+      if (!ratingToProblems.has(r)) ratingToProblems.set(r, []);
+      // Problem code: contestId + index (e.g. 1234A)
+      const code = sub.problem.contestId + sub.problem.index;
+      const url = `https://codeforces.com/problemset/problem/${sub.problem.contestId}/${sub.problem.index}`;
+      ratingToProblems.get(r).push({ code, url });
+    }
+  }
+});
+
+// Function to convert hex to rgba with alpha
+function hexToRgba(hex, alpha) {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+  const num = parseInt(hex, 16);
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+
+// Insert chart container
+// insertChartContainer();
+// Add problem list container below chart
+let listDiv = document.getElementById('rshf-profile-rating-problems');
+if (!listDiv) {
+  listDiv = document.createElement('div');
+  listDiv.id = 'rshf-profile-rating-problems';
+  listDiv.style.margin = '16px 0 0 0';
+  listDiv.style.fontSize = '1em';
+  const chartBox = document.getElementById('rshf-profile-rating-histogram');
+  chartBox.appendChild(listDiv);
+}
+listDiv.innerHTML = '';
+
+const ctx = document.getElementById('rshf-rating-bar-chart').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      label: 'Problems Solved',
+      data,
+      backgroundColor: bgColors,
+      borderColor: '#333',
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `Solved: ${ctx.parsed.y} (Rating: ${ctx.label})`
+        }
+      }
+    },
+    onClick: (evt, elements) => {
+      if (!elements.length) return;
+      const idx = elements[0].index;
+      const rating = labels[idx];
+      const problems = ratingToProblems.get(rating) || [];
+      if (problems.length === 0) {
+        listDiv.innerHTML = `<em>No problems found for rating ${rating}.</em>`;
+        return;
+      }
+      listDiv.innerHTML = `<b>${rating} rated problems solved:</b> ` +
+        problems.map(p => `<a href="${p.url}" target="_blank" style="margin-right:6px;">${p.code}</a>`).join(', ');
+      // Scroll to listDiv
+    //   listDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  },
+  scales: {
+    x: {
+      title: { display: true, text: 'Problem Rating' },
+      ticks: { autoSkip: false, font: { size: 12 } }
+    },
+    y: {
+      title: { display: true, text: 'Problems Solved' },
+      beginAtZero: true,
+      precision: 0
+    }
+  }
+});
+}
+  
 // Remove Codeforces rating classes from element
 function removeRatingClasses(element) {
   const ratingClasses = [

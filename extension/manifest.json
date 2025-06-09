@@ -18,10 +18,20 @@
       "128": "images/icon128.png"
     }
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/lib/chart.umd.js"],
+      "matches": ["https://*.codeforces.com/*"]
+    },
+    {
+      "resources": ["images/*", "assets/*"],
+      "matches": ["https://*.codeforces.com/*"]
+    }
+  ],
   "content_scripts": [
     {
       "matches": ["https://*.codeforces.com/*"],
-      "js": ["js/content/content.js"],
+      "js": ["js/lib/chart.umd.js", "js/content/content.js"],
       "css": ["css/content.css"]
     }
   ],
@@ -29,12 +39,6 @@
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["images/*", "assets/*"],
-      "matches": ["https://*.codeforces.com/*"]
-    }
-  ]
+  }
 
 }
