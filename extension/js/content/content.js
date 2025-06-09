@@ -313,7 +313,7 @@ function filterBlogsByRank(blogSettings) {
     const lowerboundSetting = blogSettings.rankLowerbound || 'newbie'; // Ensure default
     const lowerboundIdx = getRankIndex(getRankNameForDropdownValue(lowerboundSetting));
 
-    if (userRankIdx < lowerboundIdx && username !== 'atcoder_official' && username !== 'MikeMirzayanov') {
+    if (userRankIdx < lowerboundIdx && username !== 'atcoder_official' && username !== 'MikeMirzayanov' && username !== 'ICPCNews' && username !== 'luogu_official') {
       // Blog entry should be filtered
       if (filteredBlogsListElement) {
         filteredBlogsListElement.appendChild(li); // Move to the filtered list
@@ -468,13 +468,13 @@ async function initializeExtension() {
   const settings = await getStoredSettings();
 
   // --- Comment Filtering ---
-  const commentSettings = {
-    groupAssumedRating: localData.commentGroupAssumedRating || 'rshf',
-    nonMemberAssumedRating: localData.commentNonMemberAssumedRating || 'official_cf',
-    rankLowerbound: localData.commentRankLowerbound || 'newbie'
-  };
   // Only filter comments on blog entry pages
   if (window.location.href.startsWith('https://codeforces.com/blog/entry')) {
+    const commentSettings = {
+        groupAssumedRating: localData.commentGroupAssumedRating || 'rshf',
+        nonMemberAssumedRating: localData.commentNonMemberAssumedRating || 'official_cf',
+        rankLowerbound: localData.commentRankLowerbound || 'newbie'
+      };
     filterCommentsByRank(commentSettings);
   }
 
@@ -482,7 +482,6 @@ async function initializeExtension() {
   // This needs to be done only if there's a recent actions box on the page.
   // The setup function itself checks for the original box.
   setupFilteredBlogsBox();
-
   // --- Blog Filtering ---
   const blogSettings = {
     groupAssumedRating: localData.blogGroupAssumedRating || 'rshf',

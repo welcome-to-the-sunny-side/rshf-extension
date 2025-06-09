@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Setup custom dropdown functionality
-// Note: :holyf: non-member display mode is handled generically here
 function setupCustomDropdowns() {
   // In-group display dropdown
   inGroupDisplaySelected.addEventListener('click', () => {
@@ -265,7 +264,9 @@ function loadGroups() {
     if (result.selectedGroup) {
       groupInput.value = result.selectedGroup.group_name;
     } else {
-    //   groupInput.value = 'main';
+        chrome.storage.local.set({ selectedGroup: { group_id: 'main', group_name: 'main' } }, () => {
+            groupInput.value = 'main';
+        });
     }
   });
 }

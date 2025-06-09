@@ -75,8 +75,6 @@ async function triggerRefresh(isInitialSetup = false) {
   return result;
 }
 
-
-
 // --- Event Listeners ---
 
 // On extension install or update
@@ -102,28 +100,10 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
     case 'setSelectedGroup':
-      chrome.storage.local.get(STORAGE_KEY_RATINGS_DATA, (result) => {
-        const allRatingsData = result[STORAGE_KEY_RATINGS_DATA];
-        if (allRatingsData) {
-          const groupNameKey = message.group.group_name; // Use the actual group name string
-          const groupData = allRatingsData[groupNameKey]; // Access using the string key
-          if (groupData) {
-            const numberOfKeysInGroup = Object.keys(groupData).length;
-            if (numberOfKeysInGroup > 0) {
-              chrome.storage.local.set({ selectedGroup: message.group }, () => { 
-                sendResponse({ success: true });
-              });
-            } else {
-              sendResponse({ success: false, error: `Group '${groupNameKey}' not found or has no data.` });
-            }
-          } else {
-            sendResponse({ success: false, error: `Group '${groupNameKey}' not found or has no data.` });
-          }
-        } else {
-          sendResponse({ success: false, error: `Group '${message.group.group_name}' not found or has no data.` });
-        }
-      });
-      return true;
+        chrome.storage.local.set({ selectedGroup: message.group }, () => {
+            sendResponse({ success: true });
+        });
+        return true;
     case 'forceRefreshRatings':
       triggerRefresh().then(sendResponse);
       return true;
