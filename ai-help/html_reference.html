@@ -1,239 +1,266 @@
-<div class="_UserActivityFrame_frame">
+<div class="roundbox  borderTopRound borderBottomRound" style="padding:1em 1em 0 1em;">
+    <div class="userbox">
 
-    <div class="roundbox userActivityRoundBox borderTopRound borderBottomRound" style="">
+<style>
+    .title-photo input.upload-photo {
+        color: black;
+        height: 2em;
+        line-height: 1.5em;
+        font-size: 0.75em;
+        margin: 0.5em 0.5em 0.5em 0;
+    }
+    .title-photo .badge {
+        position: absolute;
+        bottom: -30px;
+        transform: scale(0.75);
+    }
+</style>
 
-                <div class="_UserActivityFrame_header">
-                    <span class="_UserActivityFrame_caption">
-                    </span>
-
-                        <div class="_UserActivityFrame_selector weeks53">
-                            <label>
-                                <select name="yearSelect" style="font-size: 1em !important">
-                                    <option value="" selected="">Choose year</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2024">2024</option>
-                                </select>
-                            </label>
-                        </div>
-
-                        <div class="_UserActivityFrame_selector weeks53">
-                            <label for="showPrivateActivity">What activity will be shown to other users:</label>
-                            <select name="showPrivateActivity" id="showPrivateActivity" style="font-size: 1em !important">
-                                <option value="true" selected="">All</option>
-                                <option value="false">Only public</option>
-                            </select>
-                        </div>
-                </div>
-
-                <div id="userActivityGraph"><svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 721 110"><g transform="translate(25, 20)"><g transform="translate(0,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="06/09/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="06/10/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="06/11/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="06/12/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="06/13/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="06/14/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="06/15/2024"></rect></g><g transform="translate(13,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="06/16/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="06/17/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="06/18/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="06/19/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="06/20/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="06/21/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="06/22/2024"></rect></g><g transform="translate(26,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="06/23/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="06/24/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="06/25/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="06/26/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="06/27/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="06/28/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="06/29/2024"></rect></g><g transform="translate(39,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="06/30/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="07/01/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="07/02/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="07/03/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="07/04/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="07/05/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="07/06/2024"></rect></g><g transform="translate(52,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="07/07/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="07/08/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="07/09/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="07/10/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="07/11/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="07/12/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="07/13/2024"></rect></g><g transform="translate(65,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="07/14/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="07/15/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="07/16/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="07/17/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="07/18/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="07/19/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="07/20/2024"></rect></g><g transform="translate(78,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="07/21/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="07/22/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="07/23/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="07/24/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="07/25/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="07/26/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="07/27/2024"></rect></g><g transform="translate(91,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="07/28/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="07/29/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="07/30/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="07/31/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="08/01/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="08/02/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="08/03/2024"></rect></g><g transform="translate(104,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="08/04/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="08/05/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="08/06/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="08/07/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="08/08/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="08/09/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="08/10/2024"></rect></g><g transform="translate(117,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="08/11/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="08/12/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="08/13/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="08/14/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="08/15/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="08/16/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="08/17/2024"></rect></g><g transform="translate(130,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="08/18/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="08/19/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="08/20/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="08/21/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="08/22/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="08/23/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="08/24/2024"></rect></g><g transform="translate(143,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="08/25/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="08/26/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="08/27/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="08/28/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="08/29/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="08/30/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="08/31/2024"></rect></g><g transform="translate(156,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="09/01/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="09/02/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="09/03/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="09/04/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="09/05/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="09/06/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="09/07/2024"></rect></g><g transform="translate(169,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="09/08/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="09/09/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="09/10/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="09/11/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="09/12/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="09/13/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="09/14/2024"></rect></g><g transform="translate(182,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="09/15/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="09/16/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="09/17/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="09/18/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="09/19/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="09/20/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="09/21/2024"></rect></g><g transform="translate(195,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="09/22/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="09/23/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="09/24/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="09/25/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="09/26/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="09/27/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="09/28/2024"></rect></g><g transform="translate(208,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="09/29/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="09/30/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="10/01/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="10/02/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="10/03/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="10/04/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="10/05/2024"></rect></g><g transform="translate(221,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="10/06/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="10/07/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="10/08/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="10/09/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="10/10/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="10/11/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="10/12/2024"></rect></g><g transform="translate(234,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="10/13/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="10/14/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="10/15/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="10/16/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="10/17/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="10/18/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="10/19/2024"></rect></g><g transform="translate(247,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="10/20/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="10/21/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="10/22/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="10/23/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="10/24/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="10/25/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="10/26/2024"></rect></g><g transform="translate(260,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="10/27/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="10/28/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="10/29/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="10/30/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="10/31/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="11/01/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="11/02/2024"></rect></g><g transform="translate(273,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="11/03/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="11/04/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="11/05/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="11/06/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="11/07/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="11/08/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="11/09/2024"></rect></g><g transform="translate(286,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="11/10/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="11/11/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="11/12/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="11/13/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="11/14/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="11/15/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="11/16/2024"></rect></g><g transform="translate(299,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="11/17/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="11/18/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="11/19/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="11/20/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="11/21/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="11/22/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="11/23/2024"></rect></g><g transform="translate(312,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="11/24/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="11/25/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="11/26/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="11/27/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="11/28/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="11/29/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="11/30/2024"></rect></g><g transform="translate(325,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="12/01/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="12/02/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="12/03/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="12/04/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="12/05/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="12/06/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="12/07/2024"></rect></g><g transform="translate(338,0)"><rect class="day" width="11" height="11" y="0" fill="#30A14E" data-items="3" data-date="12/08/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="12/09/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="12/10/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="12/11/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="12/12/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="12/13/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="12/14/2024"></rect></g><g transform="translate(351,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="12/15/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="12/16/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="12/17/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="12/18/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="12/19/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#216E39" data-items="4" data-date="12/20/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="12/21/2024"></rect></g><g transform="translate(364,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="12/22/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="12/23/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#216E39" data-items="4" data-date="12/24/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="12/25/2024"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="12/26/2024"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="12/27/2024"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="12/28/2024"></rect></g><g transform="translate(377,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="12/29/2024"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="12/30/2024"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="12/31/2024"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="01/01/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="01/02/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="01/03/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="01/04/2025"></rect></g><g transform="translate(390,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="01/05/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="01/06/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="01/07/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="01/08/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="01/09/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="01/10/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="01/11/2025"></rect></g><g transform="translate(403,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="01/12/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="01/13/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="01/14/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="01/15/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="01/16/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="01/17/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="01/18/2025"></rect></g><g transform="translate(416,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="01/19/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="01/20/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="01/21/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="01/22/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="01/23/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="01/24/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="01/25/2025"></rect></g><g transform="translate(429,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="01/26/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="01/27/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="01/28/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="01/29/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="01/30/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="01/31/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="02/01/2025"></rect></g><g transform="translate(442,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="02/02/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="02/03/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="02/04/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="02/05/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="02/06/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="02/07/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="02/08/2025"></rect></g><g transform="translate(455,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="02/09/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="02/10/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="02/11/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="02/12/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="02/13/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="02/14/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="02/15/2025"></rect></g><g transform="translate(468,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="02/16/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="02/17/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="02/18/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="02/19/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="02/20/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="02/21/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="02/22/2025"></rect></g><g transform="translate(481,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="02/23/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="02/24/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="02/25/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="02/26/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="02/27/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="02/28/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="03/01/2025"></rect></g><g transform="translate(494,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="03/02/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="03/03/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="03/04/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="03/05/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="03/06/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="03/07/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="03/08/2025"></rect></g><g transform="translate(507,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="03/09/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="03/10/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="03/11/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="03/12/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="03/13/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="03/14/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="03/15/2025"></rect></g><g transform="translate(520,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="03/16/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="03/17/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="03/18/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="03/19/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="03/20/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="03/21/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#216E39" data-items="4" data-date="03/22/2025"></rect></g><g transform="translate(533,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="03/23/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="03/24/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="03/25/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="03/26/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="03/27/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="03/28/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#216E39" data-items="4" data-date="03/29/2025"></rect></g><g transform="translate(546,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="03/30/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="03/31/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="04/01/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="04/02/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#216E39" data-items="4" data-date="04/03/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="04/04/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="04/05/2025"></rect></g><g transform="translate(559,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="04/06/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="04/07/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="04/08/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="04/09/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="04/10/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="04/11/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="04/12/2025"></rect></g><g transform="translate(572,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="04/13/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="04/14/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="04/15/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="04/16/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="04/17/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="04/18/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#216E39" data-items="4" data-date="04/19/2025"></rect></g><g transform="translate(585,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="04/20/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#216E39" data-items="4" data-date="04/21/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="04/22/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="04/23/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="04/24/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="04/25/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="04/26/2025"></rect></g><g transform="translate(598,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="04/27/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="04/28/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="04/29/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="04/30/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="05/01/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="05/02/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="05/03/2025"></rect></g><g transform="translate(611,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="05/04/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="05/05/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="05/06/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="05/07/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="05/08/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="05/09/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="05/10/2025"></rect></g><g transform="translate(624,0)"><rect class="day" width="11" height="11" y="0" fill="#216E39" data-items="4" data-date="05/11/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="05/12/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="05/13/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#40C463" data-items="2" data-date="05/14/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="05/15/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="05/16/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="05/17/2025"></rect></g><g transform="translate(637,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="05/18/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="05/19/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#40C463" data-items="2" data-date="05/20/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#91DA9E" data-items="1" data-date="05/21/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="05/22/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="05/23/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#40C463" data-items="2" data-date="05/24/2025"></rect></g><g transform="translate(650,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="05/25/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="05/26/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#EBEDF0" data-items="" data-date="05/27/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="05/28/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="05/29/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="05/30/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#30A14E" data-items="3" data-date="05/31/2025"></rect></g><g transform="translate(663,0)"><rect class="day" width="11" height="11" y="0" fill="#91DA9E" data-items="1" data-date="06/01/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#EBEDF0" data-items="" data-date="06/02/2025"></rect><rect class="day" width="11" height="11" y="26" fill="#40C463" data-items="2" data-date="06/03/2025"></rect><rect class="day" width="11" height="11" y="39" fill="#EBEDF0" data-items="" data-date="06/04/2025"></rect><rect class="day" width="11" height="11" y="52" fill="#EBEDF0" data-items="" data-date="06/05/2025"></rect><rect class="day" width="11" height="11" y="65" fill="#EBEDF0" data-items="" data-date="06/06/2025"></rect><rect class="day" width="11" height="11" y="78" fill="#EBEDF0" data-items="" data-date="06/07/2025"></rect></g><g transform="translate(676,0)"><rect class="day" width="11" height="11" y="0" fill="#EBEDF0" data-items="" data-date="06/08/2025"></rect><rect class="day" width="11" height="11" y="13" fill="#40C463" data-items="2" data-date="06/09/2025"></rect></g><text x="0" y="-5" class="month">Jun</text><text x="52" y="-5" class="month">Jul</text><text x="104" y="-5" class="month">Aug</text><text x="156" y="-5" class="month">Sep</text><text x="221" y="-5" class="month">Oct</text><text x="273" y="-5" class="month">Nov</text><text x="325" y="-5" class="month">Dec</text><text x="390" y="-5" class="month">Jan</text><text x="442" y="-5" class="month">Feb</text><text x="494" y="-5" class="month">Mar</text><text x="559" y="-5" class="month">Apr</text><text x="611" y="-5" class="month">May</text><text x="663" y="-5" class="month">Jun</text><text text-anchor="middle" class="wday" dx="-13" dy="22">Mon</text><text text-anchor="middle" class="wday" dx="-13" dy="48">Wed</text><text text-anchor="middle" class="wday" dx="-13" dy="74">Fri</text></g>"Your browser does not support inline SVG."</svg></div>
-
-                <div class="_UserActivityFrame_footer">
-                    <div class="_UserActivityFrame_countersRow">
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">41 problems</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                solved for all time
-                            </div>
-                        </div>
-
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">41 problems</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                solved for the last year
-                            </div>
-                        </div>
-
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">10 problems</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                solved for the last month
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="_UserActivityFrame_countersRow">
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">2 days</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                in a row max.
-                            </div>
-                        </div>
-
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">2 days</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                in a row for the last year
-                            </div>
-                        </div>
-
-                        <div class="_UserActivityFrame_counter">
-                            <div class="_UserActivityFrame_counterValue">2 days</div>
-                            <div class="_UserActivityFrame_counterDescription">
-                                in a row for the last month
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="title-photo">
+    <div style="float:right;border:1px solid #B9B9B9;width:300px;min-height:150px;padding:12.5px;position: relative;margin-bottom: 1em;">
+    <div>
+        <div style="min-height:200px;line-height:200px;text-align:center;">
+<img style="margin:auto;vertical-align:middle;display:inline;" src="https://userpic.codeforces.org/3280176/title/8557d41c20e9587c.jpg">        </div>
+    </div>
     </div>
 </div>
-<script data-nocturne="true"> $(function () {
-    function renderCalendar(fromDate, toDate, strictRange) {
-        if (toDate === undefined || fromDate === undefined) {
-            fromDate = new Date();
-            fromDate.setMonth(fromDate.getMonth() - 12);
-            toDate = new Date();
-        }
 
-        $('#userActivityGraph').empty().calendar_yearview_blocks({
-            data: {
-                "2025-05-21": {
-                    items: [
-                        1
-                    ]
-                }, 
-                "2024-12-20": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2025-05-31": {
-                    items: [
-                        3
-                    ]
-                }, 
-                "2025-05-20": {
-                    items: [
-                        2
-                    ]
-                }, 
-                "2025-04-21": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2025-05-11": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2025-06-01": {
-                    items: [
-                        1
-                    ]
-                }, 
-                "2025-05-14": {
-                    items: [
-                        2
-                    ]
-                }, 
-                "2025-03-22": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2025-05-24": {
-                    items: [
-                        2
-                    ]
-                }, 
-                "2025-06-03": {
-                    items: [
-                        2
-                    ]
-                }, 
-                "2025-04-03": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2024-12-08": {
-                    items: [
-                        3
-                    ]
-                }, 
-                "2025-06-09": {
-                    items: [
-                        2
-                    ]
-                }, 
-                "2025-04-19": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2025-03-29": {
-                    items: [
-                        4
-                    ]
-                }, 
-                "2024-12-24": {
-                    items: [
-                        4
-                    ]
-                }
-            },
-            start_monday: false,
-            always_show_tooltip: false,
-            month_names: ['Jan', 'Feb', 'Mar',
-                'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep',
-                'Oct', 'Nov', 'Dec'],
-            day_names: ['Mon', "Wed", "Fri", "Sun"],
-            colors: {
-                'default': '#EBEDF0',
-                1: '#91DA9E',
-                2: '#40C463',
-                3: '#30A14E',
-                4: '#216E39'
-            },
-            prettify_date: function (date) {
-                const tokens = date.split("-");
-                return tokens[1] + '/' + tokens[2] + '/' + tokens[0];
-            },
-            format_tip: function (date, items) {
-                return "{0} <br />".formatString(date);
-            },
-            from_date: fromDate,
-            to_date: toDate,
-            strict_range: strictRange
-        });
+    <script type="text/javascript">
+        $(document).ready(function () {
+    function showChangeTitlePhotoForm() {
+        $("#change-title-photo").parent().hide();
+        $(".change-title-photo-form").slideDown();
     }
 
-    renderCalendar();
-
-    $("._UserActivityFrame_selector select[name=showPrivateActivity]").change(function () {
-        $.post("/data/user/overcompensate/activity", {
-            action: "changeSettings",
-            showPrivateActivity: $(this).val()
-        }, function (response) {
-            if (response.success === "true") {
-                Codeforces.showMessage("Settings have been saved")
-            }
-        });
-
+    $("input.upload-photo").click(function () {
+        Codeforces.confirm(
+            "Image can't contain offensive, rough or uncultured things. Also it can't contain anyone photo except you.\n\nDo you confirm that the image meets these criteria?",
+            function () {
+                $(".change-title-photo-form form").submit();
+            },
+            function () { },
+            "Yes",
+            "No"
+        );
         return false;
     });
 
-    function yearChangeHandle(yearStr) {
-        if (yearStr) {
-            const year = parseInt(yearStr, 10);
-            const toDate = new Date();
-            toDate.setFullYear(year);
-            toDate.setMonth(11); // 0 - Jan, so 11 - Dec
-            toDate.setDate(31);
+    $("#change-title-photo").click(function () {
+        showChangeTitlePhotoForm();
+    });
+    $("#unset-title-photo").click(function () {
+        Codeforces.confirm(
+            "Are you sure you want to unset your current photo?",
+            function () {
+                $(".unset-title-photo-form form").submit();
+            },
+            function () { },
+            "Yes",
+            "No"
+        );
+    });
 
-            const fromDate = new Date();
-            fromDate.setFullYear(year);
-            fromDate.setMonth(0);
-            fromDate.setDate(1);
+        });
+    </script>
 
-            renderCalendar(fromDate, toDate, true);
-        } else {
-            renderCalendar();
-        }
+        <div class="info" style="position: relative;">
+            <div class="main-info ">
+                <div class="user-rank">
+                    <span class="user-gray" style="color: rgb(128, 128, 128);">Pupil </span>
+                </div>
+                <h1>
+<a href="/profile/Otherwordly" title="Pupil Otherwordly" class="rated-user user-gray" style="color: rgb(128, 128, 128);">Otherwordly</a>                            <img class="addFriend friendStar" frienduserid="3280176" title="Click to add to users you are following" src="//codeforces.org/s/96829/images/icons/star_gray_24.png">
+                </h1>
+
+            <div style="margin-top: 0.5em;">
+                <div style="font-size: 0.8em; color: #777;">From <a href="/ratings/organization/47567">Dost Abi Karteli</a></div>
+            </div>
+            </div>
+            <ul>
+                    <li>
+                            <img style="vertical-align:middle;margin-right:0.5em;" src="//codeforces.org/s/96829/images/icons/rating-24x24.png" alt="User''s contest rating in Codeforces community" title="User''s contest rating in Codeforces community">
+
+                            Contest rating:
+
+                        <span style="font-weight:bold;" class="user-green">1304</span> <span class="smaller"> (max. <span style="font-weight:bold;" class="user-cyan">specialist, </span> <span style="font-weight:bold;" class="user-cyan">1455</span>)</span>                    </li>
+                    <li>
+                            <img style="vertical-align:middle;margin-right:0.5em;" src="//codeforces.org/s/96829/images/icons/star_blue_24.png" alt="User''s contribution into Codeforces community" title="User''s contribution into Codeforces community">
+
+                            Contribution:
+
+                        <span style="color:green;font-weight:bold;">+88</span>                    </li>
+                    <li>
+                            <img style="vertical-align:middle;margin-right:0.5em;" src="//codeforces.org/s/96829/images/icons/star_yellow_24.png">
+
+
+                        Friend of: 31 users                    </li>
+                    <li>
+
+                            Last visit:
+
+                        <span class="format-humantime" title="10.05.2003 00:00 UTC+5.5">3 hours ago</span>                    </li>
+                    <li>
+
+                            Registered:
+
+                        <span class="format-humantime" title="30.05.2003 00:00 UTC+5.5">2 years ago</span>                    </li>
+                    <li>
+                            <a href="/blog/Otherwordly"><img style="vertical-align:middle;margin-right:0.5em;" src="//codeforces.org/s/96829/images/icons/blog.png" alt="Otherwordly's blog" title="Otherwordly's blog"></a>
+
+
+                        <a href="/blog/Otherwordly">Blog entries (1)</a>,
+                                    <a href="/comments/with/Otherwordly">comments</a>
+                    </li>
+                    <li>
+                            <a href="/usertalk/with/Otherwordly"><img style="vertical-align:middle;margin-right:0.5em;" src="//codeforces.org/s/96829/images/actions/mail_generic.png" alt="Your talks with Otherwordly" title="Your talks with Otherwordly"></a>
+
+
+                        <a href="/usertalk/with/Otherwordly">Talks</a> |
+                                    <a href="/usertalk?other=Otherwordly">Send message</a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+    function updateFriendClickListeners() {
+        $("img.removeFriend").click(function () {
+            var img = $(this);
+            var friendUserId = img.attr("friendUserId");
+
+            $.post("/data/friend", {friendUserId: friendUserId, isAdd: "false"}, function(json) {
+                if (json["success"] === "true") {
+                    var newImg = img.clone().removeClass("removeFriend").addClass("addFriend");
+                    newImg.attr("src", "//codeforces.org/s/96829/images/icons/star_gray_24.png");
+                    newImg.attr("title", "Click to add to users you are following");
+                    img.css("display", "none");
+                    img.after(newImg);
+                    updateFriendClickListeners();
+                } else {
+                    alert(json["reason"]);
+                }
+            }, "json");
+            return false;
+        });
+
+        $("img.addFriend").click(function () {
+            var img = $(this);
+            var friendUserId = img.attr("friendUserId");
+            $.post("/data/friend", {friendUserId: friendUserId, isAdd: "true"}, function(json) {
+                if (json["success"] === "true") {
+                    var newImg = img.clone().removeClass("addFriend").addClass("removeFriend");
+                    newImg.attr("src", "//codeforces.org/s/96829/images/icons/star_yellow_24.png");
+                    newImg.attr("title", "Click to remove from users you are following");
+                    img.css("display", "none");
+                    img.after(newImg);
+                    updateFriendClickListeners();
+                } else {
+                    alert(json["reason"]);
+                }
+            }, "json");
+            return false;
+        });
     }
 
-    $("._UserActivityFrame_selector select[name=yearSelect]").change(function () {
-        yearChangeHandle($(this).val());
-    });
-}); </script>
+    updateFriendClickListeners();
+        });
+    </script>
+
+<form class="trust-user-form-proto"><input type="hidden" name="csrf_token" value="a27f5f321b2778ed4f7a32781047388c">
+    <input class="trust-user-form-checkbox" type="checkbox">
+    <i class="icon-question-sign clickable-title" data-title="<div class='ttypography'>
+<p>
+This user does not have permission to perform one or more actions from the list:
+</p>
+<ul>
+<li>write blog posts/comments,</li>
+<li>create mashups,</li>
+<li>create private groups.</li>
+</ul>
+<p>You can confirm that you know the user personally and guarantee reasonableness and adequacy. In this case, you can grant him rights by noting your trust.
+</p>
+<p>In case of violation of any rules of the site, administrative penalties can be applied to you (up to the ban). Think twice before confirming your trust.</p>
+<p>You can review the list of people you trust by <a href='/trustList'>the link</a>.
+</p></div>" title="
+
+This user does not have permission to perform one or more actions from the list:
+
+
+write blog posts/comments,
+create mashups,
+create private groups.
+
+You can confirm that you know the user personally and guarantee reasonableness and adequacy. In this case, you can grant him rights by noting your trust.
+
+In case of violation of any rules of the site, administrative penalties can be applied to you (up to the ban). Think twice before confirming your trust.
+You can review the list of people you trust by the link.
+" style="position: relative; bottom: 3px;"></i>
+<input type="hidden" name="_tta" value="226"></form>
+
+<style>
+    .trust-user-form-proto {
+        display: none;
+    }
+
+    .trust-user-form, .trust-user-form form {
+        display: inline;
+        padding: 0;
+        margin: 0;
+        line-height: 1rem;
+    }
+
+    .trust-user-form input {
+        padding: 0;
+        margin: 0;
+        position: relative;
+        top: 7px;
+    }
+</style>
+
+<script>
+    $(function () {
+        $(".trust-user-form").each(function () {
+            var p = $(".trust-user-form-proto").clone(true, true).removeClass("trust-user-form-proto");
+            $(".trust-user-form").append(p);
+            var checked = $(this).attr("data-value") === "true";
+            $(".trust-user-form input").each(function() {
+                $(this).prop('checked', checked);
+            }).change(function () {
+                var title = $(".trust-user-form .clickable-title").attr("data-title");
+                var $this = $(this);
+                var value = $this.prop('checked');
+                if (value) {
+                    Codeforces.confirm(title + " <br/><b>Are you sure you want to trust the user?</b>", function () {
+                        $.post("/data/trusts", {
+                            action: "change",
+                            targetUserId: 3280176,
+                            value: value
+                        }, function (result) {
+                            if (result["success"] === "true") {
+                                Codeforces.reload();
+                            }
+                        }, "json");
+                        $this.prop("checked", value);
+                    }, function() {}, "Yes", "No");
+                } else {
+                    Codeforces.confirm("Are you sure you want to remove the user from your trust list?", function () {
+                        $.post("/data/trusts", {
+                            action: "change",
+                            targetUserId: 3280176,
+                            value: value
+                        }, function (result) {
+                            if (result["success"] === "true") {
+                                Codeforces.reload();
+                            }
+                        }, "json");
+                        $this.prop("checked", value);
+                    }, function() {}, "Yes", "No");
+                }
+                $this.prop("checked", checked);
+                return false;
+            });
+        });
+    })
+</script>
+    </div>

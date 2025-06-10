@@ -36,6 +36,14 @@ const inGroupDisplayList = document.getElementById('in-group-display-list');
 const nonMemberDisplaySelected = document.getElementById('non-member-display-selected');
 const nonMemberDisplayList = document.getElementById('non-member-display-list');
 
+// Cheater display elements
+const cheaterDisplay = document.getElementById('cheater-display');
+const cheaterDisplaySelected = document.getElementById('cheater-display-selected');
+const cheaterDisplayList = document.getElementById('cheater-display-list');
+
+// Add support for new cheater display option: brown_holyf
+// (No additional logic needed, just ensure it is included in dropdowns and storage)
+
 // Initialize popup
 document.addEventListener('DOMContentLoaded', () => {
   // Standard button handlers
@@ -76,6 +84,18 @@ function setupCustomDropdowns() {
       selectDropdownOption(option, nonMemberDisplaySelected, nonMemberDisplayList, nonMemberDisplay);
     });
   });
+
+  // Cheater display dropdown
+  if (cheaterDisplaySelected && cheaterDisplayList && cheaterDisplay) {
+    cheaterDisplaySelected.addEventListener('click', () => {
+      toggleDropdown(cheaterDisplayList);
+    });
+    document.querySelectorAll('#cheater-display-list .dropdown-option').forEach(option => {
+      option.addEventListener('click', () => {
+        selectDropdownOption(option, cheaterDisplaySelected, cheaterDisplayList, cheaterDisplay);
+      });
+    });
+  }
 
   // --- Comment Filtering Dropdowns ---
   commentGroupAssumedRatingSelected.addEventListener('click', () => {
@@ -232,11 +252,13 @@ function handleGroupChange() {
 
 // Display preference change handler
 function handleDisplayChange() {
-  const nonMemberDisplayMode = nonMemberDisplay.value;
-  const inGroupDisplayMode = inGroupDisplay.value;
+  const nonMemberDisplayMode = nonMemberDisplay ? nonMemberDisplay.value : 'plain'; // Default if element not found
+  const inGroupDisplayMode = inGroupDisplay ? inGroupDisplay.value : 'official_cf'; // Default if element not found
+  const cheaterDisplayMode = cheaterDisplay ? cheaterDisplay.value : 'cheater_default'; // Default if element not found
   chrome.storage.local.set({
     nonMemberDisplay: nonMemberDisplayMode,
-    inGroupDisplay: inGroupDisplayMode
+    inGroupDisplay: inGroupDisplayMode,
+    cheaterDisplay: cheaterDisplayMode
   });
 }
 
@@ -273,14 +295,14 @@ function loadGroups() {
 
 // Load display preferences
 function loadDisplayPreferences() {
-    chrome.storage.local.get(['nonMemberDisplay', 'inGroupDisplay'], (result) => {
+    chrome.storage.local.get(['nonMemberDisplay', 'inGroupDisplay', 'cheaterDisplay'], (result) => {
       // Set values for hidden select elements
-      const nonMemberValue = result.nonMemberDisplay || 'newbie'; // Default to 'newbie' (Gray)
-      nonMemberDisplay.value = nonMemberValue;
+      const nonMemberValue = result.nonMemberDisplay || 'plain'; // Default to 'plain' (CF Rating)
+      if (nonMemberDisplay) nonMemberDisplay.value = nonMemberValue;
       
       // Update the visible dropdown text and selected option
       const selectedOption = document.querySelector(`#non-member-display-list .dropdown-option[data-value="${nonMemberValue}"]`);
-      if (selectedOption) {
+      if (selectedOption && nonMemberDisplaySelected) {
         nonMemberDisplaySelected.textContent = selectedOption.textContent;
         
         // Update selected class
@@ -291,12 +313,12 @@ function loadDisplayPreferences() {
       }
       
       // Handle inGroupDisplay similarly with a default
-      const inGroupValue = result.inGroupDisplay || 'rshf';
-      inGroupDisplay.value = inGroupValue;
+      const inGroupValue = result.inGroupDisplay || 'official_cf';
+      if (inGroupDisplay) inGroupDisplay.value = inGroupValue;
       
       // Update the visible dropdown text and selected option
       const selectedInGroupOption = document.querySelector(`#in-group-display-list .dropdown-option[data-value="${inGroupValue}"]`);
-      if (selectedInGroupOption) {
+      if (selectedInGroupOption && inGroupDisplaySelected) {
         inGroupDisplaySelected.textContent = selectedInGroupOption.textContent;
         
         // Update selected class
@@ -304,6 +326,20 @@ function loadDisplayPreferences() {
           opt.classList.remove('selected');
         });
         selectedInGroupOption.classList.add('selected');
+      }
+
+      // Cheater display preference
+      const cheaterValue = result.cheaterDisplay || 'cheater_default'; // Default to 'cheater_default'
+      if (cheaterDisplay) {
+        cheaterDisplay.value = cheaterValue;
+        const selectedCheaterOption = document.querySelector(`#cheater-display-list .dropdown-option[data-value="${cheaterValue}"]`);
+        if (selectedCheaterOption && cheaterDisplaySelected) {
+          cheaterDisplaySelected.textContent = selectedCheaterOption.textContent;
+          document.querySelectorAll('#cheater-display-list .dropdown-option').forEach(opt => {
+            opt.classList.remove('selected');
+          });
+          selectedCheaterOption.classList.add('selected');
+        }
       }
     });
 }
@@ -316,7 +352,7 @@ function loadBlogFilteringPreferences() {
     'blogRankLowerbound'
   ], (result) => {
     // Group assumed rating
-    const groupValue = result.blogGroupAssumedRating || 'rshf';
+    const groupValue = result.blogGroupAssumedRating || 'official_cf';
     blogGroupAssumedRating.value = groupValue;
     const selectedGroupOption = document.querySelector(`#blog-group-assumed-rating-list .dropdown-option[data-value="${groupValue}"]`);
     if (selectedGroupOption) {
@@ -361,7 +397,7 @@ function loadCommentFilteringPreferences() {
     'commentRankLowerbound'
   ], (result) => {
     // Group assumed rating
-    const groupValue = result.commentGroupAssumedRating || 'rshf';
+    const groupValue = result.commentGroupAssumedRating || 'official_cf';
     commentGroupAssumedRating.value = groupValue;
     const selectedGroupOption = document.querySelector(`#comment-group-assumed-rating-list .dropdown-option[data-value="${groupValue}"]`);
     if (selectedGroupOption) {

@@ -462,7 +462,7 @@ async function initializeExtension() {
   // Only filter comments on blog entry pages
   if (window.location.href.startsWith('https://codeforces.com/blog/entry')) {
     const commentSettings = {
-        groupAssumedRating: localData.commentGroupAssumedRating || 'rshf',
+        groupAssumedRating: localData.commentGroupAssumedRating || 'official_cf',
         nonMemberAssumedRating: localData.commentNonMemberAssumedRating || 'official_cf',
         rankLowerbound: localData.commentRankLowerbound || 'newbie'
       };
@@ -475,7 +475,7 @@ async function initializeExtension() {
   setupFilteredBlogsBox();
   // --- Blog Filtering ---
   const blogSettings = {
-    groupAssumedRating: localData.blogGroupAssumedRating || 'rshf',
+    groupAssumedRating: localData.blogGroupAssumedRating || 'official_cf',
     nonMemberAssumedRating: localData.blogNonMemberAssumedRating || 'official_cf',
     rankLowerbound: localData.blogRankLowerbound || 'newbie'
   };
@@ -523,7 +523,7 @@ async function processPage(settings, group_display_name) { // Added group_displa
   const userElements = document.querySelectorAll(
     '.rated-user'
   );
-  
+
   if (userElements.length === 0 || !rshfSelectedGroupData) {
     return; 
   }
@@ -672,7 +672,9 @@ async function processProfileBox(settings, group_display_name) {
   
   // Get the username
   const username = mainUserHandleElement.textContent.trim();
-  
+
+  console.log(username);
+
   // Only on /profile pages: fetch data from API
   if (window.location.pathname.startsWith('/profile/')) {
     
@@ -680,51 +682,54 @@ async function processProfileBox(settings, group_display_name) {
     const existingRshfLi = profileBox.querySelector('.rshf-rating-li');
     if (existingRshfLi) existingRshfLi.remove();
     if (!rshfSelectedGroupData || !rshfSelectedGroupData[username]) {
-        // User not found in memory data - apply non-member styling
-        const maxRatingSpans = ratingLiElement?.querySelectorAll('.smaller span');
-        //Apply class to non-group members according to settings, using no hardcoded values
-        switch (settings.nonMemberDisplay) {
-            case 'transparent':
-              mainUserHandleElement.classList.add('rshf-non-member-transparent');
-              if (userRankSpan) userRankSpan.classList.add('rshf-non-member-transparent');
-              if (ratingSpanElement) ratingSpanElement.classList.add('rshf-non-member-transparent');
-              // Also strike-through the max rating spans if present
-              if (maxRatingSpans) maxRatingSpans.forEach(span => span.classList.add('rshf-non-member-transparent'));
-              break;
-            case 'strike-through':
-              mainUserHandleElement.classList.add('rshf-strike-through');
-              if (userRankSpan) userRankSpan.classList.add('rshf-strike-through');
-              if (ratingSpanElement) ratingSpanElement.classList.add('rshf-strike-through');
-              // Also strike-through the max rating spans if present
-              if (maxRatingSpans) maxRatingSpans.forEach(span => span.classList.add('rshf-strike-through'));
-              break;
-            case 'newbie':
-              removeRatingClasses(mainUserHandleElement);
-              mainUserHandleElement.classList.add(RANK_CLASSES.newbie);
-              if (userRankSpan) userRankSpan.classList.add(RANK_CLASSES.newbie);
-              if (ratingSpanElement) ratingSpanElement.classList.add(RANK_CLASSES.newbie);
-              // Also strike-through the max rating spans if present
-              if (maxRatingSpans) maxRatingSpans.forEach(span => span.classList.add('user-gray'));
-              break;
-            case 'plain':
-            default:
-              break;
-          }
-          return;
+        // User not found in RSHF group data - apply non-member styling
+        applyCustomDisplayMode(mainUserHandleElement, settings.nonMemberDisplay);
+        if (userRankSpan) {
+          applyCustomDisplayMode(userRankSpan, settings.nonMemberDisplay);
         }
+        return;
+      }
     
       const rating = rshfSelectedGroupData[username][1];
       const maxRating = rshfSelectedGroupData[username][2];
       const groupName = group_display_name;
       
       const ratingInfo = getRatingInfo(rating);
+      const isCheater = ratingInfo.name === "Cheater";
 
-      if (settings.inGroupDisplay !== 'official_cf') {
-        removeRatingClasses(userRankSpan);
-        userRankSpan.textContent = ratingInfo.name;
-        userRankSpan.classList.add(ratingInfo.cssClass);
-        userRankSpan.style.color = ratingInfo.color;
+      if (isCheater) {
+        console.log(`Cheater detected: ${username}. Applying mode: ${settings.cheaterDisplay}`);
+        if (settings.cheaterDisplay !== 'plain') {
+          // Apply cheater styling to handle, layering effects
+          applyCustomDisplayMode(mainUserHandleElement, settings.cheaterDisplay, true);
+          if (userRankSpan) {
+            // Rank is always just brown, with "Cheater" text
+            applyCustomDisplayMode(userRankSpan, 'cheater_default');
+            userRankSpan.textContent = ratingInfo.name;
+          }
+        }
+        // If 'plain', do nothing, preserving original CF cheater look.
+      } else {
+        // Non-cheater group member: Apply inGroupDisplay settings for rank
+        if (settings.inGroupDisplay !== 'official_cf') {
+          if (userRankSpan) {
+            removeRatingClasses(userRankSpan);
+            userRankSpan.textContent = ratingInfo.name;
+            userRankSpan.classList.add(ratingInfo.cssClass);
+            userRankSpan.style.color = ratingInfo.color;
+          }
+        } else {
+          // official_cf: ensure no RSHF styles on userRankSpan if they were applied before
+          if (userRankSpan) {
+            // applyCustomDisplayMode(userRankSpan, 'plain'); // Clears RSHF styles
+            // And ensure original CF text/rank is there. This is tricky.
+            // Let's assume CF default is fine if we don't touch it.
+          }
+        }
       }
+      // The mainUserHandleElement for a non-cheater group member generally retains its CF styling.
+      // If settings.inGroupDisplay was 'rshf', mainUserHandleElement might also need RSHF rank color.
+      // Current logic doesn't seem to change mainUserHandleElement for non-cheater group members here.
       
       // 4. Add a new list item for RSHF Rating (simple HTML matching the original example)
       let rshfLi = document.createElement('li');
@@ -746,25 +751,18 @@ async function processProfileBox(settings, group_display_name) {
       </a>`;
       
       rshfLi.innerHTML = rshfHtml;
+
+      // Modify the CF rating label text to avoid confusion
+      if (ratingLiElement) {
+        const textNode = Array.from(ratingLiElement.childNodes).find(node => 
+          node.nodeType === Node.TEXT_NODE && node.textContent.includes('Contest rating:')
+        );
+        if (textNode) {
+          textNode.textContent = textNode.textContent.replace('Contest rating:', 'CF Rating:');
+        }
+      }
       
-      // Modify the CF rating label text
-    //   if (ratingLiElement) {
-    //     // Get all text nodes in the rating element
-    //     const textNodes = Array.from(ratingLiElement.childNodes)
-    //       .filter(node => node.nodeType === Node.TEXT_NODE);
-        
-    //     // Find the text node that contains "Contest rating:"
-    //     const ratingTextNode = textNodes.find(node => 
-    //       node.textContent.includes('Contest rating:'));
-          
-    //     if (ratingTextNode) {
-    //       // Replace "Contest rating:" with "CF Rating:"
-    //       ratingTextNode.textContent = ratingTextNode.textContent.replace(
-    //         'Contest rating:', 'CF Rating:');
-    //     }
-    //   }
-      
-      // Insert before the contest rating li
+      // Insert the new RSHF rating element before the (now renamed) CF rating element
       if (ratingLiElement && ratingLiElement.parentNode) {
         ratingLiElement.parentNode.insertBefore(rshfLi, ratingLiElement);
       } else if (profileBox.querySelector('ul')) {
@@ -786,16 +784,30 @@ function replaceRatings(elements, settings) {
     element.style.opacity = '';
     
     const username = element.textContent.trim();
-    const userData = rshfSelectedGroupData[username]; // Format: [cf_handle, rating]
+    const userData = rshfSelectedGroupData[username]; // Format: [cf_handle, rating, max_rating]
 
     if (userData && userData[1] !== undefined && userData[1] !== null) {
       // User is in the group
       const rating = userData[1];
       const maxRating = userData[2];
-      if (settings.inGroupDisplay === 'official_cf') {
-        // Keep official CF rating
+      const isCheater = getRankName(rating) === "Cheater";
+
+      if (isCheater) {
+        applyCustomDisplayMode(element, settings.cheaterDisplay);
       } else {
-        updateElementWithNewRating(element, rating, maxRating);
+        // Non-cheater group member
+        if (settings.inGroupDisplay === 'official_cf') {
+          // Keep official CF rating (styles might have been cleared by a previous applyCustomDisplayMode if element was processed before, ensure CF classes are reapplied or not removed for this case)
+          // For now, assume CF default classes are on the element or will be reapplied by CF scripts if RSHF doesn't touch it.
+          // If applyCustomDisplayMode was called, it would have cleared them. So, if 'official_cf', we might need to re-apply original CF class if we knew it.
+          // This part is tricky. Let's assume 'plain' behavior from applyCustomDisplayMode is sufficient for 'official_cf' if no RSHF rating is shown.
+          // However, updateElementWithNewRating *replaces* content. If inGroupDisplay is 'official_cf', we do nothing here, preserving original CF style.
+          // The initial clearing in applyCustomDisplayMode might be an issue if this element was previously styled as a cheater then re-eval as non-cheater group member.
+          // For safety, if 'official_cf', ensure no RSHF specific classes remain from a potential prior styling. removeRatingClasses(element) is done by applyCustomDisplayMode.
+          // If it was a cheater, then became non-cheater, applyCustomDisplayMode(element, 'plain') might be needed first if not default.
+        } else {
+          updateElementWithNewRating(element, rating, maxRating); // This applies RSHF rating and color
+        }
       }
     } else {
       // User is not in the group
@@ -810,62 +822,87 @@ function updateElementWithNewRating(element, rating, maxRating = null) {
   const ratingInfo = getRatingInfo(rating);
   element.classList.add(ratingInfo.cssClass);
   element.style.color = ratingInfo.color;
-
-
 }
 
-// Handle elements for users not in the selected group
-function handleNonGroupMember(element, displayMode) {
+// Apply custom display modes to an element
+function applyCustomDisplayMode(element, displayMode, isCheaterHandle = false) {
+  // Cleanup previous RSHF effects to ensure a clean slate
+  element.style.opacity = '';
+  element.classList.remove('rshf-strike-through');
+  const holyfImg = element.parentNode.querySelector('.rshf-holyf-img');
+  if (holyfImg) holyfImg.remove();
+
+  // For cheaters, apply a base brown color unless the mode is 'newbie' (gray) or 'plain'.
+  if (isCheaterHandle && displayMode !== 'newbie' && displayMode !== 'plain') {
+    element.style.color = RANK_COLORS.cheater;
+  }
+
   switch (displayMode) {
-    case 'transparent':
-      element.style.opacity = '0.5';
+    case 'plain':
       break;
-    case 'strike-through':
-      // Make sure we're applying strike-through consistently
-      element.classList.add('rshf-strike-through');
-      // For rated users, maintain their original color but with strike-through
-      // This ensures we match the original styling behavior
-      break;
-    case 'newbie':
+    case 'cheater_default':
       removeRatingClasses(element);
-      element.classList.add(RANK_CLASSES.newbie);
-      element.style.color = RANK_COLORS.newbie;
+      element.classList.add(RANK_CLASSES.cheater);
+      element.style.color = RANK_COLORS.cheater;
       break;
-    case ':holyf:':
-      // Avoid duplicating the image if already present
-      if (!element.nextSibling || !(element.nextSibling.classList && element.nextSibling.classList.contains('rshf-holyf-img'))) {
+    case 'brown_holyf':
+      removeRatingClasses(element);
+      element.classList.add(RANK_CLASSES.cheater);
+      element.style.color = RANK_COLORS.cheater;
+      // Add spinning holyf image
+      if (!element.parentNode.querySelector('.rshf-holyf-img')) {
         const img = document.createElement('img');
         img.src = chrome.runtime.getURL('assets/holyf.png');
-        img.alt = ':holyf:';
-        img.className = 'rshf-holyf-img';
-        img.style.height = '1.3em';
-        img.style.width = 'auto';
-        img.style.verticalAlign = 'middle';
-        img.style.marginLeft = '2px';
-        element.parentNode.insertBefore(img, element.nextSibling);
-      }
-      break;
-    case ':holyf:+':
-      // Avoid duplicating the image if already present
-      if (!element.nextSibling || !(element.nextSibling.classList && element.nextSibling.classList.contains('rshf-holyf-img'))) {
-        const img = document.createElement('img');
-        img.src = chrome.runtime.getURL('assets/holyf.png');
-        img.alt = ':holyf:+';
+        img.alt = 'brown_holyf';
         img.className = 'rshf-holyf-img';
         img.style.height = '1.5em';
         img.style.width = 'auto';
         img.style.verticalAlign = 'middle';
         img.style.marginLeft = '2px';
-        // Randomly choose clockwise or counterclockwise spin
         const isCw = Math.random() < 0.5;
         img.style.animation = (isCw ? 'rshf-rotate' : 'rshf-rotate-ccw') + ' 1.2s linear infinite';
         element.parentNode.insertBefore(img, element.nextSibling);
       }
       break;
-    case 'plain':
+    case 'transparent':
+      element.style.opacity = '0.5';
+      break;
+    case 'strike-through':
+      element.classList.add('rshf-strike-through');
+      break;
+    case 'newbie': // Used for 'Gray' cheater display
+      removeRatingClasses(element);
+      element.classList.add(RANK_CLASSES.newbie);
+      element.style.color = RANK_COLORS.newbie;
+      break;
+    case ':holyf:':
+    case ':holyf:+':
+      // Avoid duplicating the image
+      if (!element.parentNode.querySelector('.rshf-holyf-img')) {
+        const img = document.createElement('img');
+        img.src = chrome.runtime.getURL('assets/holyf.png');
+        img.alt = displayMode;
+        img.className = 'rshf-holyf-img';
+        img.style.height = '1.3em';
+        img.style.width = 'auto';
+        img.style.verticalAlign = 'middle';
+        img.style.marginLeft = '2px';
+        if (displayMode === ':holyf:+') {
+          img.style.height = '1.5em'; // A bit larger for spinning
+          const isCw = Math.random() < 0.5;
+          img.style.animation = (isCw ? 'rshf-rotate' : 'rshf-rotate-ccw') + ' 1.2s linear infinite';
+        }
+        element.parentNode.insertBefore(img, element.nextSibling);
+      }
+      break;
     default:
       break;
   }
+}
+
+// Handle elements for users not in the selected group
+function handleNonGroupMember(element, displayMode) {
+  applyCustomDisplayMode(element, displayMode);
 }
 
 // --- Profile Page Additions: Histogram (date-filtered) + Line chart (static) ---
@@ -1196,10 +1233,11 @@ function removeRatingClasses(element) {
 
 async function getStoredSettings() {
   return new Promise(resolve => {
-    chrome.storage.local.get(['nonMemberDisplay', 'inGroupDisplay', 'selectedGroup'], result => {
+    chrome.storage.local.get(['nonMemberDisplay', 'inGroupDisplay', 'cheaterDisplay', 'selectedGroup'], result => {
       resolve({
         nonMemberDisplay: result.nonMemberDisplay || 'newbie', // Default to Gray
-        inGroupDisplay: result.inGroupDisplay || 'rshf' // Default to RSHF ratings
+        inGroupDisplay: result.inGroupDisplay || 'official_cf', // Default to RSHF ratings
+        cheaterDisplay: result.cheaterDisplay || 'cheater_default' // Default to Brown
       });
     });
   });
