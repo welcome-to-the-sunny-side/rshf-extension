@@ -489,7 +489,8 @@ async function initializeExtension() {
 // Adds "View on RSHF" link to sidebar Pay attention box if present
 function processSidebarContestBox() {
   const sidebar = document.getElementById('sidebar');
-  if (!sidebar) return;
+  if (!sidebar)
+        return;
   // Find all roundbox/sidebox elements
   const boxes = sidebar.querySelectorAll('.roundbox.sidebox');
   for (const box of boxes) {
@@ -526,10 +527,6 @@ async function processPage(settings, group_display_name) { // Added group_displa
     '.rated-user'
   );
 
-  if (userElements.length === 0 || !rshfSelectedGroupData) {
-    return; 
-  }
-  // No need to extract usernames or fetch, data is already loaded
   replaceRatings(userElements, settings);
   processProfileSidebar(settings, group_display_name);
   
@@ -540,8 +537,8 @@ async function processPage(settings, group_display_name) { // Added group_displa
 
   // Call sidebar contest box processing second last
   processSidebarContestBox();
-  // Call contest page processing last
 
+  // Call contest page processing last
   if(window.location.pathname.startsWith('/contests')) {
     processContestPage();
   }
@@ -602,7 +599,6 @@ function processContestPage() {
   }
   if (pastTable) addRshfLinksToTable(pastTable);
   if (upcomingTable) addRshfLinksToTable(upcomingTable);
-
 }
 
 
@@ -1152,7 +1148,8 @@ async function profilePageAdditions() {
       const labels = [...ratingCounts.keys()].sort((a,b)=>a-b);
       const data   = labels.map(r => ratingCounts.get(r));
       const barColors = labels.map(r => {
-        if (r >= 2300 && r < 2400) return 'rgba(248,203,147,.84)';
+        if (r >= 2300 && r < 2400) return 'rgba(246, 163, 63, 0.84)';
+        if (r >= 2600 && r < 3000) return 'rgba(234, 88, 88, 0.93)'
         if (r >= 3000)             return 'rgba(228,18,18,.75)';
         return hexToRgba(ratingColor(r), 0.5);
       });
@@ -1188,7 +1185,7 @@ async function profilePageAdditions() {
                 const r = labels[els[0].index];
                 const probs = ratingToProblems.get(r)||[];
                 listDiv.innerHTML = probs.length
-                  ? `<b>${r} rated problems (${probs.length}):</b><br>`+
+                  ? `<b>${r} rated problems solved (${probs.length}):</b><br>`+
                     probs.map(p=>`<a href="${p.url}" target="_blank" style="margin-right:6px;">${p.code}</a>`).join(', ')
                   : `<em>No problems found for rating ${r}.</em>`;
               },
