@@ -289,13 +289,15 @@ function filterBlogsByRank(blogSettings) {
       const rankClass = Array.from(classList).find(cls => cls.startsWith('user-') && cls !== 'user-black' && cls !== 'rated-user');
       if (rankClass) {
         switch (rankClass) {
-          case 'user-gray': cfRating = 1100; break;      // Newbie approx.
-          case 'user-green': cfRating = 1300; break;     // Pupil approx.
-          case 'user-cyan': cfRating = 1500; break;      // Specialist approx.
-          case 'user-blue': cfRating = 1700; break;       // Expert approx.
-          case 'user-violet': cfRating = 2000; break;    // CM approx.
-          case 'user-orange': cfRating = 2200; break;    // Master/IM approx.
-          case 'user-red': cfRating = 2500; break;        // GM+ approx.
+          case 'user-gray': cfRating = 0; break;      // Newbie approx.
+          case 'user-green': cfRating = 1200; break;     // Pupil approx.
+          case 'user-cyan': cfRating = 1400; break;      // Specialist approx.
+          case 'user-blue': cfRating = 1600; break;       // Expert approx.
+          case 'user-violet': cfRating = 1900; break;    // CM approx.
+          case 'user-orange': cfRating = 2100; break;    // Master/IM approx.
+          case 'user-red': cfRating = 2400; break;        // GM+ approx.
+          case 'user-legendary': cfRating = 3000; break;    // Legend approx.
+          case 'user-4000': cfRating = 4000; break;    // Tourist approx.
           default: cfRating = undefined;
         }
       }
