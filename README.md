@@ -9,3 +9,4 @@
 ![standings before after](/misc/standings-before-after.png)
 ![blogs before after](/misc/blogs-before-after.png)
 ![comments before after](/misc/comments-before-after.png)
+![solve charts](/misc/solve-charts.png)
