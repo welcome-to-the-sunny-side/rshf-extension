@@ -1234,7 +1234,7 @@ async function getStoredSettings() {
   return new Promise(resolve => {
     chrome.storage.local.get(['nonMemberDisplay', 'inGroupDisplay', 'cheaterDisplay', 'selectedGroup'], result => {
       resolve({
-        nonMemberDisplay: result.nonMemberDisplay || 'newbie', // Default to Gray
+        nonMemberDisplay: result.nonMemberDisplay || 'plain', // Default to official CF rating
         inGroupDisplay: result.inGroupDisplay || 'official_cf', // Default to RSHF ratings
         cheaterDisplay: result.cheaterDisplay || 'cheater_default' // Default to Brown
       });
