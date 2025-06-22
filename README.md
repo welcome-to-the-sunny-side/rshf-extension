@@ -4,6 +4,12 @@
 - Open your browser, go to the extensions page, enable `Developer mode`, and click `Load unpacked`. Select the unzipped folder.
 - Choose a group in the extension popup, and configure the rest of the settings to your liking.
 
+### Supported Browsers
+
+- Chrome
+- Brave
+- Other chromium based browsers
+
 ## Features
 
 - Replace Codeforces ratings/username colors with RSHF ratings/username colors.
