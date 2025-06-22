@@ -671,8 +671,6 @@ async function processProfileBox(settings, group_display_name) {
   // Get the username
   const username = mainUserHandleElement.textContent.trim();
 
-  console.log(username);
-
   // Only on /profile pages: fetch data from API
   if (window.location.pathname.startsWith('/profile/')) {
     
@@ -696,7 +694,6 @@ async function processProfileBox(settings, group_display_name) {
       const isCheater = ratingInfo.name === "Cheater";
 
       if (isCheater) {
-        console.log(`Cheater detected: ${username}. Applying mode: ${settings.cheaterDisplay}`);
         if (settings.cheaterDisplay !== 'plain') {
           // Apply cheater styling to handle, layering effects
           applyCustomDisplayMode(mainUserHandleElement, settings.cheaterDisplay, true);
@@ -964,14 +961,14 @@ async function profilePageAdditions() {
       const raw   = await fetchSolves(handle);
       const seen  = new Set();
       S.submissions = raw
-        .filter(s => s.verdict === 'OK' && typeof s.problem?.rating === 'number')
+        .filter(s => s.verdict === 'OK')
         .sort((a, b) => a.creationTimeSeconds - b.creationTimeSeconds)
         .filter(s => {
           const k = `${s.problem.contestId}-${s.problem.index}`;
           return seen.has(k) ? false : (seen.add(k), true);
         });
     }
-    const SUBS = S.submissions;             // never changes after this point
+    SUBS = S.submissions;
   
     /* ────────── build static layout & line chart ONCE ────────── */
     if (!S.lineChart) {                     // first visit to this profile
@@ -1082,7 +1079,7 @@ async function profilePageAdditions() {
               monthProblemsDiv.innerHTML = problems.length
                 ? `<b>Problems solved in ${ym} (${problems.length}):</b><br>`+
                   problems.map(p=>`<a href="${p.url}" target="_blank"
-                                     style="margin-right:8px;color:${ratingColor(p.rating)};"
+                                     style="margin-right:8px;color:${p.rating ? ratingColor(p.rating) : ratingColor(800)};"
                                      title="Rating ${p.rating}">${p.code}</a>`).join(' ')
                 : `<em>No problems found for ${ym}.</em>`;
             },
@@ -1108,6 +1105,9 @@ async function profilePageAdditions() {
       beforeInput.onchange = saveFilterAndRedraw;
     } // (end: first-time DOM/line chart build)
   
+    //filter SUBS to only include problems which have an assigned rating
+    SUBS_FOR_HISTOGRAM = SUBS.filter(s => typeof s.problem?.rating === 'number');
+
     /* ────────── always (re)compute histogram using current filter ────────── */
     updateHistogram();
   
@@ -1126,7 +1126,7 @@ async function profilePageAdditions() {
       }
   
       /* filter subs for histogram */
-      const filtered = SUBS.filter(s => {
+      const filtered = SUBS_FOR_HISTOGRAM.filter(s => {
         const t = s.creationTimeSeconds * 1000;
         if (S.filter.from   && t <  Date.parse(S.filter.from))   return false;
         if (S.filter.before && t >= Date.parse(S.filter.before)) return false;
