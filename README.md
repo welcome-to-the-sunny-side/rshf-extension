@@ -22,6 +22,9 @@
 ## Preview
 
 ![standings before after](/misc/standings-before-after.png)
+<br>
 ![blogs before after](/misc/blogs-before-after.png)
+<br>
 ![comments before after](/misc/comments-before-after.png)
+<br>
 ![solve charts](/misc/solve-charts.png)
