@@ -23,8 +23,11 @@
 
 ![standings before after](/misc/standings-before-after.png)
 <br>
+<br>
 ![blogs before after](/misc/blogs-before-after.png)
 <br>
+<br>
 ![comments before after](/misc/comments-before-after.png)
+<br>
 <br>
 ![solve charts](/misc/solve-charts.png)
