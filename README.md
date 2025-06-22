@@ -8,6 +8,7 @@
 
 - Chrome
 - Brave
+- Edge
 - Other chromium based browsers
 
 ## Features
